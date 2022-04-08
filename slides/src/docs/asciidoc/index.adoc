@@ -1,0 +1,89 @@
+[state=no-title-footer]
+== Goldschmiede
+
+[.text-center]
+--
+
+image:hilla.svg[width=600px]
+
+29.04.2022, Hans Jörg Heßmann
+--
+
+[.columns]
+== Vorstellung
+
+--
+[.heading]
+Hans Jörg Heßmann
+
+* Softwareentwickler
+* Java seit 1997
+* Schwerpunkte
+** Webanwendungen
+** Batch-Entwicklung
+** Build und Deployment
+** Codequalität und Testing
+* Java, Spring, Vaadin, Asciidoc, Dessert, ...
+--
+
+image::anderScore/user-hjhessmann.jpg[float=right, pdfwidth=3cm]
+
+include::anderScore1Slide.adoc[]
+
+== Name: Hilla
+
+image:translate_Hilla.png[width=80%]
+
+[.columns]
+== Wikipedia
+
+image:wikipedia_Moltebeere.png[width=80%]
+
+--
+https://de.wikipedia.org/wiki/Moltebeere[https://de.wikipedia.org +
+/wiki/Moltebeere]
+--
+
+== Vaadin
+
+image:translate_Vaadin.png[width=80%]
+
+== hilla.dev
+
+image:hilla_dev.png[width=80%]
+
+https://hilla.dev/
+
+== Vergleich
+
+https://vaadin.com/comparison?compare=hilla_vs_angular
+
+== Start
+
+https://start.vaadin.com
+
+== Links
+
+* CSS-Klassen: https://vaadin.com/docs/latest/ds/foundation/utility-classes
+* Ausführliches Tutorial: https://hilla.dev/docs/tutorials/in-depth-course
+
+== Build
+
+Bauen und starten mit:
+
+    mvn clean install
+    mvn spring-boot:run
+
+== Anbindung eines Java-Backends (Endpoints)
+
+* Evtl. Dependencies ergänzen: https://start.spring.io/
+
+.Annotationen:
+* *@Endpoint*
+* *@Nonnull*
+* *@AnonymousAllowed*
+
+== Model-Binding (Binder)
+
+* TypeScript-Klasse: Binder
+* field-Methode für Binding

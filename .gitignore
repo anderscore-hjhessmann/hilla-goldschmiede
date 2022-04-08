@@ -1,0 +1,25 @@
+# ignore Maven specific files
+**/target/
+
+# ignore Eclipse specific files
+**/.settings/
+**/.project
+**/.classpath
+**/.factorypath
+**/.sts4-cache
+
+# ignore IDEA specific files
+**/out/
+/.idea/
+*.iml
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# ignore node files
+**/node_modules
+
+/slides/generated-src
+
+adhoc*
+**/Adhoc*
