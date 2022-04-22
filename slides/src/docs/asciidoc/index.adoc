@@ -1,3 +1,5 @@
+:muster: ../../../../hilla-todo-muster
+
 [state=no-title-footer]
 == Goldschmiede
 
@@ -122,24 +124,171 @@ import './views/todo/todo-view';
 ...
 ----
 
+== Backend: Entity
 
+[source, java]
+----
+include::{muster}/src/main/java/com/example/application/repository/todo/TodoItem.java[tags=code]
+----
 
-== Links
+== Backend: Repository
 
-* CSS-Klassen: https://vaadin.com/docs/latest/ds/foundation/utility-classes
+[source, java]
+----
+include::{muster}/src/main/java/com/example/application/repository/todo/TodoItemRepository.java[tags=code]
+----
+
+== Backend: Endpoint
+
+[source, java]
+----
+include::{muster}/src/main/java/com/example/application/endpoints/todo/TodoEndpoint.java[tags=code]
+----
+
+== Einfaches Formular
+
+[source, typescript]
+----
+import '@vaadin/button';
+import '@vaadin/text-field';
+
+...
+
+  render() {
+    return html`
+      <h1>Todo-Liste</h1>
+      <div>
+        <vaadin-text-field label="Aufgabe"></vaadin-text-field>
+        <vaadin-button>Hinzufügen</vaadin-button>
+      </div>
+    `;
+  }
+----
+
+== Layout-Anpassungen
+
+[source, typescript]
+----
+  connectedCallback() {
+    super.connectedCallback();
+    this.classList.add('flex', 'flex-col', 'p-m', 'gap-m', 'items-start');
+  }
+----
+
+-> https://vaadin.com/docs/latest/ds/foundation/utility-classes
+
+== Binding
+
+[source, typescript]
+----
+import {Binder, field} from "@hilla/form";
+import TodoItemModel from "Frontend/generated/com/example/application/repository/todo/TodoItemModel";
+
+...
+
+  binder = new Binder(this, TodoItemModel);
+
+  render() {
+    return html`
+      <h1>Todo-Liste</h1>
+      <div>
+        <vaadin-text-field label="Aufgabe" ${field(this.binder.model.name)}></vaadin-text-field>
+        <vaadin-button>Hinzufügen</vaadin-button>
+      </div>
+    `;
+  }
+----
+
+== Binding
+
+[source, typescript]
+----
+import {Binder, field} from "@hilla/form";
+import TodoItemModel from "Frontend/generated/com/example/application/repository/todo/TodoItemModel";
+
+...
+
+  binder = new Binder(this, TodoItemModel);
+
+  render() {
+    return html`
+      <h1>Todo-Liste</h1>
+      <div>
+        <vaadin-text-field label="Aufgabe" ${field(this.binder.model.name)}></vaadin-text-field>
+        <vaadin-button>Hinzufügen</vaadin-button>
+      </div>
+    `;
+  }
+----
+
+== Click-Handler
+
+[source, typescript]
+----
+import {TodoEndpoint} from "Frontend/generated/endpoints";
+
+...
+
+  render() {
+    return html`
+      <h1>Todo-Liste</h1>
+      <div>
+        <vaadin-text-field label="Aufgabe" ${field(this.binder.model.name)}></vaadin-text-field>
+        <vaadin-button @click="${this.addItem}">Hinzufügen</vaadin-button>
+      </div>
+    `;
+  }
+
+  async addItem() {
+    const savedItem = await this.binder.submitTo(TodoEndpoint.saveItem);
+    if (savedItem) {
+      console.log("created item with id " + savedItem.id);
+      this.binder.clear();
+    }
+  }
+----
+
+== Liste anzeigen
+
+[source, typescript]
+----
+    @state()
+    private items: TodoItem[] = [];
+
+    async connectedCallback() {
+        super.connectedCallback();
+        this.items = await TodoEndpoint.findAll();
+        this.classList.add('flex', 'flex-col', 'p-m', 'gap-m', 'items-start');
+    }
+
+    render() {
+        return html`
+            <h1>Todo-Liste</h1>
+            <div>
+                ${this.items.map(item => html`
+                    <div class="todo-item">${item.name}</div>
+                `)}
+            </div>
+            <div>
+                <vaadin-text-field label="Aufgabe" ${field(this.binder.model.name)}></vaadin-text-field>
+                <vaadin-button @click="${this.addItem}">Hinzufügen</vaadin-button>
+            </div>
+        `;
+    }
+----
+
+== Styling
+
+frontend/themes/hilla-todo-muster/styles.css
+
+[source, typescript]
+----
+todo-view .todo-item {
+    min-width: 20em;
+    background-color: lightgreen;
+}
+----
+
+== Vertiefung
+
 * Ausführliches Tutorial: https://hilla.dev/docs/tutorials/in-depth-course
-
-
-== Anbindung eines Java-Backends (Endpoints)
-
-* Evtl. Dependencies ergänzen: https://start.spring.io/
-
-.Annotationen:
-* *@Endpoint*
-* *@Nonnull*
-* *@AnonymousAllowed*
-
-== Model-Binding (Binder)
-
-* TypeScript-Klasse: Binder
-* field-Methode für Binding
