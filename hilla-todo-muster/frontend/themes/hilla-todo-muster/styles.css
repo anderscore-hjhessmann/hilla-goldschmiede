@@ -2,6 +2,6 @@
 @import url('line-awesome/dist/line-awesome/css/line-awesome.min.css');
 
 todo-view .todo-item {
-    min-width: 20em;
     background-color: lightgreen;
+    width: 20em;
 }

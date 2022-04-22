@@ -1,6 +1,7 @@
 import { Route } from '@vaadin/router';
 import './views/helloworld/hello-world-view';
 import './views/todo/todo-view';
+import './views/todo/todo-grid-view';
 import './views/main-layout';
 
 export type ViewRoute = Route & {
@@ -13,7 +14,7 @@ export const views: ViewRoute[] = [
   // place routes below (more info https://hilla.dev/docs/routing)
   {
     path: '',
-    component: 'hello-world-view',
+    component: 'todo-grid-view',
     icon: '',
     title: '',
   },
@@ -26,8 +27,14 @@ export const views: ViewRoute[] = [
   {
     path: 'todo',
     component: 'todo-view',
-    icon: '',
+    icon: 'la la-tasks',
     title: 'Todo',
+  },
+  {
+    path: 'todo-grid',
+    component: 'todo-grid-view',
+    icon: 'la la-tasks',
+    title: 'Todo-Grid',
   },
   {
     path: 'about',

@@ -118,7 +118,7 @@ import './views/todo/todo-view';
   {
     path: 'todo',
     component: 'todo-view',
-    icon: '',
+    icon: 'la la-tasks',
     title: 'Todo',
   },
 ...
@@ -255,10 +255,8 @@ import {TodoEndpoint} from "Frontend/generated/endpoints";
     @state()
     private items: TodoItem[] = [];
 
-    async connectedCallback() {
-        super.connectedCallback();
+    async firstUpdated() {
         this.items = await TodoEndpoint.findAll();
-        this.classList.add('flex', 'flex-col', 'p-m', 'gap-m', 'items-start');
     }
 
     render() {
@@ -275,11 +273,15 @@ import {TodoEndpoint} from "Frontend/generated/endpoints";
             </div>
         `;
     }
+
+    ...
+
+            this.items = [...this.items, savedItem];
 ----
 
 == Styling
 
-frontend/themes/hilla-todo-muster/styles.css
+frontend/themes/hilla-todo/styles.css
 
 [source, typescript]
 ----
@@ -287,6 +289,35 @@ todo-view .todo-item {
     min-width: 20em;
     background-color: lightgreen;
 }
+----
+
+== Grid
+
+[source, typescript]
+----
+import '@vaadin/date-picker';
+import '@vaadin/checkbox';
+import '@vaadin/grid';
+
+...
+
+    render() {
+        return html`
+            <h1>Todo-Liste</h1>
+            <vaadin-grid .items="${this.items}">
+                <vaadin-grid-column path="id"></vaadin-grid-column>
+                <vaadin-grid-column path="name" header="Aufgabe"></vaadin-grid-column>
+                <vaadin-grid-column path="due"></vaadin-grid-column>
+                <vaadin-grid-column path="done"></vaadin-grid-column>
+            </vaadin-grid>
+            <div>
+                <vaadin-text-field label="Aufgabe" ${field(this.binder.model.name)}></vaadin-text-field>
+                <vaadin-date-picker label="bis" ${field(this.binder.model.due)}></vaadin-date-picker>
+                <vaadin-checkbox label="erledigt" ${field(this.binder.model.done)}></vaadin-checkbox>
+                <vaadin-button @click="${this.addItem}">Hinzufügen</vaadin-button>
+            </div>
+        `;
+    }
 ----
 
 == Vertiefung
