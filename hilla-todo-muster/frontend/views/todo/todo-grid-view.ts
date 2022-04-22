@@ -4,32 +4,25 @@ import '@vaadin/date-picker';
 import '@vaadin/checkbox';
 import '@vaadin/grid';
 import {html} from 'lit';
-import {customElement, state} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators.js';
 import {View} from '../../views/view';
 import {Binder, field} from "@hilla/form";
 import TodoItemModel from "Frontend/generated/com/example/application/repository/todo/TodoItemModel";
-import {TodoEndpoint} from "Frontend/generated/endpoints";
-import TodoItem from "Frontend/generated/com/example/application/repository/todo/TodoItem";
+import {todoItemStore} from "Frontend/stores/todo-store";
 
 @customElement('todo-grid-view')
 export class TodoGridView extends View {
     private binder = new Binder(this, TodoItemModel);
-    @state()
-    private items: TodoItem[] = [];
 
     connectedCallback() {
         super.connectedCallback();
         this.classList.add('flex', 'flex-col', 'p-m', 'gap-m', 'items-start');
     }
 
-    async firstUpdated() {
-        this.items = await TodoEndpoint.findAll();
-    }
-
     render() {
         return html`
             <h1>Todo-Liste</h1>
-            <vaadin-grid .items="${this.items}">
+            <vaadin-grid .items="${todoItemStore.todoItems}">
                 <vaadin-grid-column path="id"></vaadin-grid-column>
                 <vaadin-grid-column path="name" header="Aufgabe"></vaadin-grid-column>
                 <vaadin-grid-column path="due"></vaadin-grid-column>
@@ -45,11 +38,7 @@ export class TodoGridView extends View {
     }
 
     async addItem() {
-        const savedItem = await this.binder.submitTo(TodoEndpoint.saveItem);
-        if (savedItem) {
-            console.log("created item with id " + savedItem.id);
-            this.binder.clear();
-            this.items = [...this.items, savedItem];
-        }
+        await this.binder.submitTo(todoItemStore.saveItem);
+        this.binder.clear();
     }
 }
