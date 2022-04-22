@@ -58,14 +58,13 @@ https://hilla.dev/
 
 https://vaadin.com/comparison?compare=hilla_vs_angular
 
-== Start
+== Getting Started
 
-https://start.vaadin.com
+Projekt anlegen:
 
-== Links
+    npx @vaadin/cli init --hilla hilla-todo
 
-* CSS-Klassen: https://vaadin.com/docs/latest/ds/foundation/utility-classes
-* Ausführliches Tutorial: https://hilla.dev/docs/tutorials/in-depth-course
+-> https://hilla.dev/docs/getting-started
 
 == Build
 
@@ -73,6 +72,63 @@ Bauen und starten mit:
 
     mvn clean install
     mvn spring-boot:run
+
+== Backend-Dependencies hinzufügen
+
+https://start.spring.io/
+
+* Lombok
+* Spring Data JPA
+* HSQL
+* Actuator
+
+== New View anlegen
+
+frontend/views/todo/todo-view.ts
+
+[source, typescript]
+----
+@customElement('todo-view')
+export class TodoView extends View {
+  name = '';
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.classList.add('flex', 'p-m', 'gap-m', 'items-end');
+  }
+
+  render() {
+    return html`
+      <h1>Todo-Liste</h1>
+    `;
+  }
+}
+----
+
+== View hinzufügen
+
+frontend/routes.ts
+
+[source, typescript]
+----
+import './views/todo/todo-view';
+...
+  {
+    path: 'todo',
+    component: 'todo-view',
+    icon: '',
+    title: 'Todo',
+  },
+...
+----
+
+
+
+== Links
+
+* CSS-Klassen: https://vaadin.com/docs/latest/ds/foundation/utility-classes
+* Ausführliches Tutorial: https://hilla.dev/docs/tutorials/in-depth-course
+
 
 == Anbindung eines Java-Backends (Endpoints)
 
