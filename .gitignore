@@ -18,6 +18,7 @@ hs_err_pid*
 
 # ignore node files
 **/node_modules
+**/frontend/generated
 
 /slides/generated-src
 
