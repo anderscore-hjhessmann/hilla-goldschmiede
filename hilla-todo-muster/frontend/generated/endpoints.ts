@@ -1,7 +1,7 @@
-import * as HelloWorldEndpoint from "./HelloWorldEndpoint";
 import * as TodoEndpoint from "./TodoEndpoint";
+import * as HelloWorldEndpoint from "./HelloWorldEndpoint";
 
 export {
-  HelloWorldEndpoint,
-  TodoEndpoint
+  TodoEndpoint,
+  HelloWorldEndpoint
 };

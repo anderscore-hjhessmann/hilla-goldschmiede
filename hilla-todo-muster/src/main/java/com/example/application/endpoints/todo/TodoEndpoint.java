@@ -23,9 +23,13 @@ public class TodoEndpoint {
     public List<@Nonnull TodoItem> findAll() {
         return repository.findAll();
     }
-
     public TodoItem saveItem(TodoItem item) {
         log.info("saveItem: {}", item);
         return repository.save(item);
+    }
+
+    public void deleteItem(TodoItem item) {
+        log.info("deleteItem: {}", item);
+        repository.delete(item);
     }
 }

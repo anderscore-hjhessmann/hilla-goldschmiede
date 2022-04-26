@@ -4,13 +4,15 @@ import {TodoEndpoint} from "Frontend/generated/endpoints";
 
 class TodoItemStore {
     todoItems: TodoItem[] = [];
+    selectedItem: TodoItem | null = null;
 
     constructor() {
         makeAutoObservable(
             this,
             {
                 initFromServer: false,
-                todoItems: observable.shallow
+                todoItems: observable.shallow,
+                selectedItem: observable.ref
             },
             {
                 autoBind: true
@@ -40,7 +42,19 @@ class TodoItemStore {
         if (itemExists) {
             this.todoItems = this.todoItems.map(item => item.id === saved.id ? saved : item);
         } else {
-            this.todoItems.push(saved);
+            this.todoItems = [...this.todoItems, saved];
+        }
+    }
+
+    async deleteItem(item: TodoItem) {
+        await TodoEndpoint.deleteItem(item);
+        this.deleteLocal(item);
+    }
+
+    private deleteLocal(deleted: TodoItem) {
+        this.todoItems = this.todoItems.filter(item => item.id !== deleted.id);
+        if (this.selectedItem?.id === deleted.id) {
+            this.selectedItem = null;
         }
     }
 }
