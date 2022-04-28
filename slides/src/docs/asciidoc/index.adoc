@@ -199,28 +199,6 @@ import TodoItemModel from "Frontend/generated/com/example/application/repository
   }
 ----
 
-== Binding
-
-[source, typescript]
-----
-import {Binder, field} from "@hilla/form";
-import TodoItemModel from "Frontend/generated/com/example/application/repository/todo/TodoItemModel";
-
-...
-
-  binder = new Binder(this, TodoItemModel);
-
-  render() {
-    return html`
-      <h1>Todo-Liste</h1>
-      <div>
-        <vaadin-text-field label="Aufgabe" ${field(this.binder.model.name)}></vaadin-text-field>
-        <vaadin-button>Hinzufügen</vaadin-button>
-      </div>
-    `;
-  }
-----
-
 == Click-Handler
 
 [source, typescript]
@@ -320,7 +298,7 @@ import '@vaadin/grid';
     }
 ----
 
-== Store: Intialisierung
+== Store: Initialisierung
 
 [source, typescript]
 ----
@@ -375,7 +353,7 @@ export const todoItemStore = new TodoItemStore();
         if (itemExists) {
             this.todoItems = this.todoItems.map(item => item.id === saved.id ? saved : item);
         } else {
-            this.todoItems.push(saved);
+            this.todoItems = [...this.todoItems, saved];
         }
     }
 ----
