@@ -298,6 +298,14 @@ import '@vaadin/grid';
     }
 ----
 
+== MobX
+
+The view is a function of the state (reactive programming model):
+
+----
+renderedHtml = template(state)
+----
+
 == Store: Initialisierung
 
 [source, typescript]

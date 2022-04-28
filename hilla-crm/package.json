@@ -249,7 +249,9 @@
     "lit": "$lit",
     "@adobe/lit-mobx": "$@adobe/lit-mobx",
     "line-awesome": "$line-awesome",
-    "mobx": "$mobx"
+    "mobx": "$mobx",
+    "@hilla/form": "$@hilla/form",
+    "@hilla/frontend": "$@hilla/frontend"
   },
   "vaadin": {
     "dependencies": {
