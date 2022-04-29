@@ -351,4 +351,7 @@ export const todoItemStore = new TodoItemStore();
 
 == Vertiefung
 
-* Ausführliches Tutorial: https://hilla.dev/docs/tutorials/in-depth-course
+* Ausführliches Tutorial: +
+  https://hilla.dev/docs/tutorials/in-depth-course
+* Sourcen aus dieser Goldschmiede: +
+  https://github.com/anderscore-hjhessmann/hilla-goldschmiede
