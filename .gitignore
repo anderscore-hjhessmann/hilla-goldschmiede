@@ -22,5 +22,7 @@ hs_err_pid*
 
 /slides/generated-src
 
+**/config/local
+
 adhoc*
 **/Adhoc*

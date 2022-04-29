@@ -1,4 +1,5 @@
 :muster: ../../../../hilla-todo-muster
+:imagesdir: images
 
 == Name: Hilla
 

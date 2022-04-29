@@ -27,6 +27,7 @@ export class ListView extends View {
                 <vaadin-button @click=${listViewStore.editNew}>
                     Add Contact
                 </vaadin-button>
+                <a href="/logout" class="ms-auto">Log out</a>
             </div>
             <div class="content flex gap-m h-full">
                 <vaadin-grid
