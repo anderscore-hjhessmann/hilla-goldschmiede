@@ -1,20 +1,33 @@
-import { makeAutoObservable } from 'mobx';
+import {makeAutoObservable} from 'mobx';
 import {
     login as serverLogin,
     logout as serverLogout,
 } from '@hilla/frontend';
-import { crmStore } from './app-store';
+import {crmStore} from './app-store';
+import {ConnectionState, ConnectionStateStore} from '@vaadin/common-frontend';
 
 class Message {
-    constructor(public text = '', public error = false, public open = false) {}
+    constructor(public text = '', public error = false, public open = false) {
+    }
 }
 
 export class UiStore {
     message = new Message();
     loggedIn = true;
+    offline = false;
+    connectionStateStore?: ConnectionStateStore;
 
     constructor() {
-        makeAutoObservable(this, {}, { autoBind: true });
+        makeAutoObservable(
+            this,
+            {
+                connectionStateListener: false,
+                connectionStateStore: false,
+                setupOfflineListener: false,
+            },
+            {autoBind: true}
+        );
+        this.setupOfflineListener();
     }
 
     showSuccess(message: string) {
@@ -53,5 +66,31 @@ export class UiStore {
         if (loggedIn) {
             crmStore.initFromServer();
         }
+    }
+
+    connectionStateListener = () => {
+        this.setOffline(
+            this.connectionStateStore?.state === ConnectionState.CONNECTION_LOST
+        );
+    };
+
+    setupOfflineListener() {
+        const $wnd = window as any;
+        if ($wnd.Vaadin?.connectionState) {
+            this.connectionStateStore = $wnd.Vaadin
+                .connectionState as ConnectionStateStore;
+            this.connectionStateStore.addStateChangeListener(
+                this.connectionStateListener
+            );
+            this.connectionStateListener();
+        }
+    }
+
+    private setOffline(offline: boolean) {
+        // Refresh from server when going online
+        if (this.offline && !offline) {
+            crmStore.initFromServer();
+        }
+        this.offline = offline;
     }
 }
